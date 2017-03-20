@@ -43,12 +43,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Override
+    // @Override
     protected void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
-		http.authorizeRequests().antMatchers("/login").permitAll().anyRequest().authenticated().and().formLogin()
-				.permitAll();
-		// @formatter:on
+        // http.authorizeRequests().antMatchers("/oauth/authorize").permitAll().anyRequest()
+        // .authenticated().and().formLogin()
+        // .permitAll();
+        http
+            .requestMatchers().antMatchers("/uaa/oauth/authorize")
+            .and()
+            .authorizeRequests().anyRequest().authenticated();
+
+        // @formatter:on
     }
 
     private PasswordEncoder passwordencoder() {
