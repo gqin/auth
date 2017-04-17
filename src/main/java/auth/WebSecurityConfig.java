@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USERS_BY_USER_NAME_QUERY =
         "select email as username, password, active as enabled from user where email=?";
     private static final String AUTHORITIES_BY_USERNAME_QUERY =
-        "select email as username, role_name from user, roles where user.fk_role_id = roles.id and email=?";
+        "select email as username, role_name from user, role where user.fk_role_id = role.id and email=?";
     @Autowired
     @Qualifier("userdatasource")
     DataSource dataSource;
@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // .authenticated().and().formLogin()
         // .permitAll();
         http
-            .requestMatchers().antMatchers("/uaa/oauth/authorize")
+            .requestMatchers().antMatchers("/oauth/authorize")
             .and()
             .authorizeRequests().anyRequest().authenticated();
 
